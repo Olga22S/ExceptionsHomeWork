@@ -6,39 +6,33 @@ import ru.skypro.ExceptionsHomeWork.exceptions.AlreadyExistsEmployeeException;
 import ru.skypro.ExceptionsHomeWork.exceptions.ArrayIsFullException;
 import ru.skypro.ExceptionsHomeWork.exceptions.EmployeeNotFoundException;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static java.util.Objects.isNull;
 
 @Service
 public class EmployeeService {
 
-    private static Employee[] employees = new Employee[10];
-    private static int counter = 0;
+    private List<Employee> employees = new ArrayList<>();
 
     public void addEmployee(String firstName, String lastName)
             throws ArrayIsFullException, AlreadyExistsEmployeeException {
-        if (counter == 10) {
-            throw new ArrayIsFullException("Array is full!");
+        if (employees.size() == 10) {
+            throw new ArrayIsFullException("Storage is full!");
         }
         if (!isNull(findEmployee(firstName, lastName))) {
             throw new AlreadyExistsEmployeeException("This employee already exists");
         }
-        employees[counter] = new Employee(firstName, lastName);
-        counter++;
+        employees.add(new Employee(firstName, lastName));
     }
 
     public void removeEmployee(String firstName, String lastName) throws EmployeeNotFoundException {
-        if (isNull(findEmployee(firstName, lastName))) {
+        Employee employee = findEmployee(firstName, lastName);
+        if (isNull(employee)) {
             throw new EmployeeNotFoundException("This employee doesn't exist");
         }
-        for (int i = 0; i < counter; i++) {
-            if (employees[i].getFirstName().equals(firstName)
-                    && employees[i].getLastName().equals(lastName)) {
-                employees[i] = null;
-                moveArray(i);
-                counter--;
-                return;
-            }
-        }
+        employees.remove(employee);
     }
 
     public Employee getEmployee(String firstName, String lastName) throws EmployeeNotFoundException {
@@ -49,22 +43,13 @@ public class EmployeeService {
         return employee;
     }
 
-    private Employee findEmployee(String firstName, String lastName) {
-        for (int i = 0; i < counter; i++) {
-            if (employees[i].getFirstName().equals(firstName)
-                    && employees[i].getLastName().equals(lastName)) {
-                return employees[i];
-            }
-        }
-        return null;
+    public List<Employee> getEmployees() {
+        return employees;
     }
 
-    private void moveArray(int i) {
-        for (int j = i; j < counter - 1; j++) {
-            employees[j] = employees[j + 1];
-        }
-        if (counter != 10) {
-            employees[counter] = null;
-        }
+    private Employee findEmployee(String firstName, String lastName) {
+        return employees.stream()
+                .filter(s -> s.getFirstName().equals(firstName) && s.getLastName().equals(lastName))
+                .findFirst().orElse(null);
     }
 }

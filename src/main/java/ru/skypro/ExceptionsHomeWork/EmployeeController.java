@@ -11,6 +11,8 @@ import ru.skypro.ExceptionsHomeWork.exceptions.ArrayIsFullException;
 import ru.skypro.ExceptionsHomeWork.exceptions.EmployeeNotFoundException;
 import ru.skypro.ExceptionsHomeWork.services.EmployeeService;
 
+import java.util.List;
+
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
 @RestController
@@ -41,7 +43,11 @@ public class EmployeeController {
     @GetMapping(value = "/find", produces = APPLICATION_JSON_VALUE)
     public Employee findEmployee(@RequestParam String firstName, @RequestParam String lastName)
             throws EmployeeNotFoundException {
-        Employee employee = employeeService.getEmployee(firstName, lastName);
-        return employee;
+        return employeeService.getEmployee(firstName, lastName);
+    }
+
+    @GetMapping(value = "/getAll", produces = APPLICATION_JSON_VALUE)
+    public List<Employee> getEmployees(){
+        return employeeService.getEmployees();
     }
 }
