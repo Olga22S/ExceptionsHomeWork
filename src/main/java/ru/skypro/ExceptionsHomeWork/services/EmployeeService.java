@@ -11,8 +11,8 @@ import static java.util.Objects.isNull;
 @Service
 public class EmployeeService {
 
-    private static Employee[] employees = new Employee[10];
-    private static int counter = 0;
+    private Employee[] employees = new Employee[10];
+    private int counter = 0;
 
     public void addEmployee(String firstName, String lastName)
             throws ArrayIsFullException, AlreadyExistsEmployeeException {

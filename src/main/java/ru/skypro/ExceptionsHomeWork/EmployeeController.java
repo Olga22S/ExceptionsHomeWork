@@ -41,7 +41,6 @@ public class EmployeeController {
     @GetMapping(value = "/find", produces = APPLICATION_JSON_VALUE)
     public Employee findEmployee(@RequestParam String firstName, @RequestParam String lastName)
             throws EmployeeNotFoundException {
-        Employee employee = employeeService.getEmployee(firstName, lastName);
-        return employee;
+        return employeeService.getEmployee(firstName, lastName);
     }
 }
