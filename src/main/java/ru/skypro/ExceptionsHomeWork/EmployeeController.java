@@ -11,7 +11,7 @@ import ru.skypro.ExceptionsHomeWork.exceptions.ArrayIsFullException;
 import ru.skypro.ExceptionsHomeWork.exceptions.EmployeeNotFoundException;
 import ru.skypro.ExceptionsHomeWork.services.EmployeeService;
 
-import java.util.List;
+import java.util.Map;
 
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
@@ -47,7 +47,7 @@ public class EmployeeController {
     }
 
     @GetMapping(value = "/getAll", produces = APPLICATION_JSON_VALUE)
-    public List<Employee> getEmployees(){
+    public Map<Integer, Employee> getEmployees() {
         return employeeService.getEmployees();
     }
 }

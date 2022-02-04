@@ -6,50 +6,54 @@ import ru.skypro.ExceptionsHomeWork.exceptions.AlreadyExistsEmployeeException;
 import ru.skypro.ExceptionsHomeWork.exceptions.ArrayIsFullException;
 import ru.skypro.ExceptionsHomeWork.exceptions.EmployeeNotFoundException;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import static java.util.Objects.isNull;
 
 @Service
 public class EmployeeService {
 
-    private List<Employee> employees = new ArrayList<>();
+    private int uid = 1;
+    private Map<Integer, Employee> employees = new HashMap<>();
 
     public void addEmployee(String firstName, String lastName)
             throws ArrayIsFullException, AlreadyExistsEmployeeException {
         if (employees.size() == 10) {
             throw new ArrayIsFullException("Storage is full!");
         }
-        if (!isNull(findEmployee(firstName, lastName))) {
+        if (!isNull(getEmployeeSet(firstName, lastName))) {
             throw new AlreadyExistsEmployeeException("This employee already exists");
         }
-        employees.add(new Employee(firstName, lastName));
+        employees.put(uid++, new Employee(firstName, lastName));
     }
 
     public void removeEmployee(String firstName, String lastName) throws EmployeeNotFoundException {
-        Employee employee = findEmployee(firstName, lastName);
-        if (isNull(employee)) {
+        Entry<Integer, Employee> employeeSet = getEmployeeSet(firstName, lastName);
+        if (isNull(employeeSet)) {
             throw new EmployeeNotFoundException("This employee doesn't exist");
         }
-        employees.remove(employee);
+        employees.remove(employeeSet.getKey());
     }
 
     public Employee getEmployee(String firstName, String lastName) throws EmployeeNotFoundException {
-        Employee employee = findEmployee(firstName, lastName);
-        if (isNull(employee)) {
+        Entry<Integer, Employee> employeeSet = getEmployeeSet(firstName, lastName);
+        if (isNull(employeeSet)) {
             throw new EmployeeNotFoundException("Employee is not found!");
         }
-        return employee;
+        return employeeSet.getValue();
     }
 
-    public List<Employee> getEmployees() {
+    public Map<Integer, Employee> getEmployees() {
         return employees;
     }
 
-    private Employee findEmployee(String firstName, String lastName) {
-        return employees.stream()
-                .filter(s -> s.getFirstName().equals(firstName) && s.getLastName().equals(lastName))
-                .findFirst().orElse(null);
+    private Entry<Integer, Employee> getEmployeeSet(String firstName, String lastName) {
+        return employees.entrySet()
+                .stream()
+                .filter(s -> s.getValue().getFirstName().equals(firstName) && s.getValue().getLastName().equals(lastName))
+                .findFirst()
+                .orElse(null);
     }
 }
