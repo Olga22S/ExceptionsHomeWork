@@ -16,7 +16,7 @@ public class EmployeeService {
 
     private List<Employee> employees = new ArrayList<>();
 
-    public void addEmployee(String firstName, String lastName)
+    public Employee addEmployee(String firstName, String lastName)
             throws ArrayIsFullException, AlreadyExistsEmployeeException {
         if (employees.size() == 10) {
             throw new ArrayIsFullException("Storage is full!");
@@ -24,15 +24,18 @@ public class EmployeeService {
         if (!isNull(findEmployee(firstName, lastName))) {
             throw new AlreadyExistsEmployeeException("This employee already exists");
         }
-        employees.add(new Employee(firstName, lastName));
+        Employee employee = new Employee(firstName, lastName);
+        employees.add(employee);
+        return employee;
     }
 
-    public void removeEmployee(String firstName, String lastName) throws EmployeeNotFoundException {
+    public Employee removeEmployee(String firstName, String lastName) throws EmployeeNotFoundException {
         Employee employee = findEmployee(firstName, lastName);
         if (isNull(employee)) {
             throw new EmployeeNotFoundException("This employee doesn't exist");
         }
         employees.remove(employee);
+        return employee;
     }
 
     public Employee getEmployee(String firstName, String lastName) throws EmployeeNotFoundException {

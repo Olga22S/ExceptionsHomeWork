@@ -13,8 +13,6 @@ import ru.skypro.ExceptionsHomeWork.services.EmployeeService;
 
 import java.util.List;
 
-import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
-
 @RestController
 @RequestMapping("/employee")
 @SpringBootApplication
@@ -26,27 +24,25 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
 
-    @GetMapping(value = "/add", produces = APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/add")
     public Employee addEmployee(@RequestParam String firstName, @RequestParam String lastName)
             throws ArrayIsFullException, AlreadyExistsEmployeeException {
-        employeeService.addEmployee(firstName, lastName);
-        return new Employee(firstName, lastName);
+        return employeeService.addEmployee(firstName, lastName);
     }
 
-    @GetMapping(value = "/remove", produces = APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/remove")
     public Employee removeEmployee(@RequestParam String firstName, @RequestParam String lastName)
             throws EmployeeNotFoundException {
-        employeeService.removeEmployee(firstName, lastName);
-        return new Employee(firstName, lastName);
+        return employeeService.removeEmployee(firstName, lastName);
     }
 
-    @GetMapping(value = "/find", produces = APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/find")
     public Employee findEmployee(@RequestParam String firstName, @RequestParam String lastName)
             throws EmployeeNotFoundException {
         return employeeService.getEmployee(firstName, lastName);
     }
 
-    @GetMapping(value = "/getAll", produces = APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/getAll")
     public List<Employee> getEmployees(){
         return employeeService.getEmployees();
     }
