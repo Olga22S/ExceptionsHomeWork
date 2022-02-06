@@ -18,7 +18,7 @@ public class EmployeeService {
     private int uid = 1;
     private Map<Integer, Employee> employees = new HashMap<>();
 
-    public void addEmployee(String firstName, String lastName)
+    public Employee addEmployee(String firstName, String lastName, int dep, double salary)
             throws ArrayIsFullException, AlreadyExistsEmployeeException {
         if (employees.size() == 10) {
             throw new ArrayIsFullException("Storage is full!");
@@ -26,15 +26,19 @@ public class EmployeeService {
         if (!isNull(getEmployeeSet(firstName, lastName))) {
             throw new AlreadyExistsEmployeeException("This employee already exists");
         }
-        employees.put(uid++, new Employee(firstName, lastName));
+        Employee employee = new Employee(firstName, lastName, dep, salary);
+        employees.put(uid++, employee);
+        return employee;
     }
 
-    public void removeEmployee(String firstName, String lastName) throws EmployeeNotFoundException {
+    public Employee removeEmployee(String firstName, String lastName) throws EmployeeNotFoundException {
         Entry<Integer, Employee> employeeSet = getEmployeeSet(firstName, lastName);
         if (isNull(employeeSet)) {
             throw new EmployeeNotFoundException("This employee doesn't exist");
         }
+        Employee employee = employeeSet.getValue();
         employees.remove(employeeSet.getKey());
+        return employee;
     }
 
     public Employee getEmployee(String firstName, String lastName) throws EmployeeNotFoundException {
