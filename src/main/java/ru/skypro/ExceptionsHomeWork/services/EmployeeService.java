@@ -14,7 +14,7 @@ public class EmployeeService {
     private Employee[] employees = new Employee[10];
     private int counter = 0;
 
-    public void addEmployee(String firstName, String lastName)
+    public Employee addEmployee(String firstName, String lastName)
             throws ArrayIsFullException, AlreadyExistsEmployeeException {
         if (counter == 10) {
             throw new ArrayIsFullException("Array is full!");
@@ -22,23 +22,27 @@ public class EmployeeService {
         if (!isNull(findEmployee(firstName, lastName))) {
             throw new AlreadyExistsEmployeeException("This employee already exists");
         }
-        employees[counter] = new Employee(firstName, lastName);
-        counter++;
+        Employee employee = new Employee(firstName, lastName);
+        employees[counter++] = employee;
+        return employee;
     }
 
-    public void removeEmployee(String firstName, String lastName) throws EmployeeNotFoundException {
+    public Employee removeEmployee(String firstName, String lastName) throws EmployeeNotFoundException {
         if (isNull(findEmployee(firstName, lastName))) {
             throw new EmployeeNotFoundException("This employee doesn't exist");
         }
+        Employee employee;
         for (int i = 0; i < counter; i++) {
             if (employees[i].getFirstName().equals(firstName)
                     && employees[i].getLastName().equals(lastName)) {
+                employee = employees[i];
                 employees[i] = null;
                 moveArray(i);
                 counter--;
-                return;
+                return employee;
             }
         }
+        return null;
     }
 
     public Employee getEmployee(String firstName, String lastName) throws EmployeeNotFoundException {
