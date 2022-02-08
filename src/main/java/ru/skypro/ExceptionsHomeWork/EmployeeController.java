@@ -9,6 +9,7 @@ import ru.skypro.ExceptionsHomeWork.entities.Employee;
 import ru.skypro.ExceptionsHomeWork.exceptions.AlreadyExistsEmployeeException;
 import ru.skypro.ExceptionsHomeWork.exceptions.ArrayIsFullException;
 import ru.skypro.ExceptionsHomeWork.exceptions.EmployeeNotFoundException;
+import ru.skypro.ExceptionsHomeWork.exceptions.NotCorrectNameException;
 import ru.skypro.ExceptionsHomeWork.services.EmployeeService;
 
 import java.util.Map;
@@ -27,19 +28,19 @@ public class EmployeeController {
     @GetMapping(value = "/add")
     public Employee addEmployee(@RequestParam String firstName, @RequestParam String lastName,
                                 @RequestParam int dep, @RequestParam double salary)
-            throws ArrayIsFullException, AlreadyExistsEmployeeException {
+            throws ArrayIsFullException, AlreadyExistsEmployeeException, NotCorrectNameException {
         return employeeService.addEmployee(firstName, lastName, dep, salary);
     }
 
     @GetMapping(value = "/remove")
     public Employee removeEmployee(@RequestParam String firstName, @RequestParam String lastName)
-            throws EmployeeNotFoundException {
+            throws EmployeeNotFoundException, NotCorrectNameException {
         return employeeService.removeEmployee(firstName, lastName);
     }
 
     @GetMapping(value = "/find")
     public Employee findEmployee(@RequestParam String firstName, @RequestParam String lastName)
-            throws EmployeeNotFoundException {
+            throws EmployeeNotFoundException, NotCorrectNameException {
         return employeeService.getEmployee(firstName, lastName);
     }
 
