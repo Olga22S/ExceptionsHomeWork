@@ -1,7 +1,7 @@
 package ru.skypro.ExceptionsHomeWork.services;
 
 import org.springframework.stereotype.Service;
-import ru.skypro.ExceptionsHomeWork.entities.Employee;
+import ru.skypro.ExceptionsHomeWork.model.Employee;
 
 import java.util.Comparator;
 import java.util.List;
@@ -9,11 +9,11 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
-public class EmployeeDepartmentService {
+public class DepartmentServiceImpl implements DepartmentService{
 
-    private EmployeeService employeeService;
+    private EmployeeServiceImpl employeeService;
 
-    public EmployeeDepartmentService(EmployeeService employeeService) {
+    public DepartmentServiceImpl(EmployeeServiceImpl employeeService) {
         this.employeeService = employeeService;
     }
 

@@ -1,4 +1,4 @@
-package ru.skypro.ExceptionsHomeWork.entities;
+package ru.skypro.ExceptionsHomeWork.model;
 
 import java.util.Objects;
 

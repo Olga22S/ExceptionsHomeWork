@@ -1,26 +1,25 @@
-package ru.skypro.ExceptionsHomeWork;
+package ru.skypro.ExceptionsHomeWork.controller;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ru.skypro.ExceptionsHomeWork.entities.Employee;
+import ru.skypro.ExceptionsHomeWork.model.Employee;
 import ru.skypro.ExceptionsHomeWork.exceptions.AlreadyExistsEmployeeException;
 import ru.skypro.ExceptionsHomeWork.exceptions.ArrayIsFullException;
 import ru.skypro.ExceptionsHomeWork.exceptions.EmployeeNotFoundException;
-import ru.skypro.ExceptionsHomeWork.services.EmployeeService;
+import ru.skypro.ExceptionsHomeWork.services.EmployeeServiceImpl;
 
 import java.util.Map;
 
 @RestController
 @RequestMapping("/employee")
-@SpringBootApplication
 public class EmployeeController {
 
-    private EmployeeService employeeService;
+    private EmployeeServiceImpl employeeService;
 
-    public EmployeeController(EmployeeService employeeService) {
+    public EmployeeController(EmployeeServiceImpl employeeService) {
         this.employeeService = employeeService;
     }
 
