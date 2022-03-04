@@ -1,6 +1,7 @@
 package ru.skypro.ExceptionsHomeWork;
 
 import org.springframework.boot.SpringApplication;
+import ru.skypro.ExceptionsHomeWork.controller.EmployeeController;
 
 public class Main {
 
